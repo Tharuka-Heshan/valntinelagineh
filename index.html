@@ -87,7 +87,7 @@
             return (
                 <div className="main-wrapper">
                     {[...Array(20)].map((_, i) => ( <div key={i} className="emoji-bg" style={{ left: (Math.random() * 95) + "%", animationDelay: (Math.random() * 10) + "s", fontSize: "20px" }}> {EMOJIS[i % EMOJIS.length]} </div> ))}
-                    {step === 100 ? ( <div className="expired"> <h1>⚠️</h1><h2>Access Expired</h2><p>Sorryy depari pluvn Contact him for another journeyy 😒😴.</p> <div className="secret-trigger" onClick={handleSecret}>?</div> </div> ) : (
+                    {step === 100 ? ( <div className="expired"> <h1>⚠️</h1><h2>Access Expired</h2><p>Sorryy depari pluvn Aneww 🥹. Contact him for get Password 😒😴.</p> <div className="secret-trigger" onClick={handleSecret}>?</div> </div> ) : (
                         <div className="card">
                             {step === 1 && ( <div><h1 className="main-title">Hello! 💝</h1><p className="step-desc">First, what is your name?</p><input placeholder="Name" className="custom-input" onChange={e => setFormData({...formData, name: e.target.value})} /><button disabled={!formData.name} className="push-btn btn-blue" onClick={() => setStep(2)}>Next ✨</button></div> )}
                             {step === 2 && ( <div><h1 className="main-title">Birthday ✨</h1><p className="step-desc">When is your special day?</p><input type="date" className="custom-input" onChange={e => setFormData({...formData, bday: e.target.value})} /><button disabled={!formData.bday} className="push-btn btn-blue" onClick={() => setStep(3)}>Continue 💖</button></div> )}
@@ -96,7 +96,7 @@
                             {step === 5 && ( <div><h1 className="main-title">Mood? 😊</h1><select className="custom-input" onChange={e => setFormData({...formData, mood: e.target.value})}><option value="">-- Choose --</option><option value="Happy">Happy 😍</option><option value="Romantic">Romantic 🥰</option></select><button disabled={!formData.mood} className="push-btn btn-blue" onClick={() => setStep(6)}>Continue 💖</button></div> )}
                             {step === 6 && ( <div><h1 className="main-title">Processing...</h1><div className="loader-ring"></div><AutoNext onDone={() => setStep(7)} /></div> )}
                             {step === 7 && ( <div><h1 className="main-title">Future Dream? 🌙</h1><input placeholder="Dream?" className="custom-input" onChange={e => setFormData({...formData, dream: e.target.value})} /><button disabled={!formData.dream} className="push-btn btn-blue" onClick={() => setStep(8)}>Next 💖</button></div> )}
-                            {step === 8 && ( <div><h1 className="main-title">Opening...</h1><div className="loader-ring"></div><AutoNext onDone={() => setStep(9)} /></div> )}
+                            {step === 8 && ( <div><h1 className="main-title">Anee indhh...</h1><div className="loader-ring"></div><AutoNext onDone={() => setStep(9)} /></div> )}
                             {step === 9 && ( <div><h1 className="main-title">Pick a Gift! 🎁</h1><span style={{fontSize: '3.5rem', cursor: 'pointer'}} onClick={() => setStep(10)}>🎁 💝 💎</span></div> )}
                             {step === 10 && ( <div><h1 className="main-title">Poddak inna! ✨</h1><button className="push-btn btn-blue" onClick={() => setStep(11)}>Mokakda? 😍</button></div> )}
                             {step === 11 && ( <div><h1 className="main-title">Ready?</h1><button className="push-btn btn-blue" onClick={() => setStep(12)}>TELL ME! 💖</button></div> )}
@@ -104,7 +104,7 @@
                             {step === 18 && ( <div style={{padding: '20px 0'}}> <h1 className="main-title" style={{fontSize: '3rem'}}>Yay! 💖</h1> <p style={{fontSize: '1.4rem', fontWeight: 'bold', color: '#ff4d6d'}}>I'm happy because you! 😌✨</p> <p style={{marginTop: '15px', color: '#888', fontStyle: 'italic'}}>I found true same mind love at last teen!🫀👣</p> </div> )}
                         </div>
                     )}
-                    <div className="owner-tag">Created By Tharuka Heshan ✨ with ☕ & 💝</div>
+                    <div className="owner-tag">Created By Tharuka Heshan ✨ with some of ☕ & many of ♥️</div>
                 </div>
             );
         }
@@ -114,3 +114,4 @@
     </script>
 </body>
 </html>
+
