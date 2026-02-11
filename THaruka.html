@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Something Special 💝</title>
+    
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+
+    <style>
+        * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
+        body, html { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; font-family: 'Poppins', sans-serif; }
+
+        .bg-layer {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2;
+            background: linear-gradient(-45deg, #ffdde1, #ee9ca7, #a2d2ff, #c2e9fb, #e2d1f9);
+            background-size: 400% 400%;
+            animation: softGradient 12s ease infinite alternate;
+        }
+        @keyframes softGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .ribbon-container {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
+            pointer-events: none;
+        }
+        .ribbon {
+            position: absolute; width: 300%; height: 3px;
+            background: linear-gradient(90deg, transparent, #00f2ff, #ff00de, #7d00ff, transparent);
+            box-shadow: 0 0 20px #00f2ff, 0 0 30px #ff00de;
+            opacity: 0.4;
+            animation: moveRibbon 10s linear infinite;
+        }
+        @keyframes moveRibbon {
+            0% { transform: translate(-50%, -20vh) rotate(-15deg); }
+            100% { transform: translate(-10%, 120vh) rotate(15deg); }
+        }
+
+        .emoji-bg {
+            position: absolute; pointer-events: none; z-index: -1;
+            animation: floatEmoji 8s linear infinite; opacity: 0;
+        }
+        @keyframes floatEmoji {
+            0% { transform: translateY(110vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Rainbow Effect එක Box එකට යටින් තැබීමට z-index: 10 කළා */
+        .rainbow-expander {
+            position: fixed; top: 50%; left: 50%; width: 0; height: 0; transform: translate(-50%, -50%);
+            border-radius: 50%; z-index: 10; 
+            background: conic-gradient(from 0deg, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000);
+            box-shadow: 0 0 100px rgba(255, 215, 0, 0.8);
+            opacity: 0; transition: all 2s ease-out; pointer-events: none;
+        }
+        .rainbow-active { width: 400vmax; height: 400vmax; opacity: 0.4; border-radius: 0; animation: slowRotate 15s linear infinite; }
+        @keyframes slowRotate { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
+
+        .main-wrapper { height: 100dvh; display: flex; align-items: center; justify-content: center; padding: 15px; }
+        
+        /* Card එක හැමවිටම Rainbow එකට උඩින් පෙනීමට z-index: 100 කළා */
+        .card { 
+            background: rgba(255, 255, 255, 0.95); padding: 35px 25px; border-radius: 40px;
+            text-align: center; width: 100%; max-width: 340px; 
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1); backdrop-filter: blur(15px); border: 2px solid rgba(255, 255, 255, 1);
+            z-index: 100; position: relative;
+        }
+
+        .main-title { font-family: 'Dancing Script', cursive; color: #ff4d6d; font-size: 2.3rem; margin-bottom: 8px; }
+        .step-desc { font-size: 0.85rem; color: #666; margin-bottom: 12px; }
+        .custom-input { width: 95%; padding: 13px; border-radius: 18px; border: 1.5px solid #eee; outline: none; text-align: center; font-size: 15px; background: white; }
+
+        .push-btn { border: none; border-radius: 50px; font-weight: 700; cursor: pointer; transition: 0.2s; margin-top: 15px; }
+        .btn-blue { background: #a2d2ff; color: #5d7dbc; padding: 15px; width: 100%; box-shadow: 0 6px 0 #89b8e6; }
+        .btn-blue:disabled { background: #f0f0f0; color: #bbb; box-shadow: 0 6px 0 #ddd; cursor: not-allowed; }
+
+        .btn-pink { background: #ff4d6d; color: #fff; padding: 18px 50px; min-width: 170px; box-shadow: 0 6px 0 #c23b54; position: relative; z-index: 105; }
+        
+        .btn-no { 
+            background: #fff; color: #ff4d6d; border: 1.5px solid #ffccd5; 
+            padding: 12px 30px; border-radius: 50px; font-weight: 600; 
+            touch-action: none; position: relative; z-index: 200; 
+            transition: left 0.2s ease, top 0.2s ease;
+        }
+
+        .expired { padding: 40px 25px; border-radius: 35px; background: white; text-align: center; color: #ff4d6d; position: relative; width: 100%; max-width: 320px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); border: 1.5px solid #ffe5ec; z-index: 100; }
+        .secret-trigger { position: absolute; bottom: 15px; right: 20px; width: 35px; height: 35px; background: #fffafb; color: #ffccd5; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; border: 1px solid #ffedf1; }
+
+        .loader-ring { border: 4px solid #f3f3f3; border-top: 4px solid #ff4d6d; border-radius: 50%; width: 45px; height: 45px; animation: spin 1s linear infinite; margin: 20px auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body>
+    <div class="bg-layer"></div>
+    <div class="ribbon-container">
+        <div class="ribbon" style="top: 20%; animation-delay: 0s;"></div>
+        <div class="ribbon" style="top: 50%; animation-delay: 4s; background: linear-gradient(90deg, transparent, #ff00de, #00f2ff, transparent);"></div>
+        <div class="ribbon" style="top: 80%; animation-delay: 8s;"></div>
+    </div>
+    
+    <div id="rainbowExp" class="rainbow-expander"></div>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        const EMOJIS = ['❤️', '💖', '✨', '🌸', '💙', '🎀'];
+        const WEB3_KEY = "469aec0b-a2b4-4dce-aa43-e4c1ffe4ec50";
+
+        const NO_PHRASES = [
+            "No :( 💔", 
+            "Pretty please? 🥺", 
+            "But we'd be so cute together LIKE same MIND🙂‍↔️:(",
+            "We are perfect match and with the same MIND (🕊️👣🍃)",
+            "One more chance, pookie? 🥹🍃🔖", 
+            "Are you really sure? 😔😒🥹",
+            "Last chance to say No... 🤨🫵"
+        ];
+
+        function App() {
+            const [step, setStep] = useState(0); 
+            const [formData, setFormData] = useState({ name: "", bday: "", favColor: "", mood: "", dream: "" });
+            const [noPos, setNoPos] = useState({ x: 0, y: 0 });
+            const [noClicks, setNoClicks] = useState(0);
+            const [yesScale, setYesScale] = useState(1);
+
+            useEffect(() => {
+                let visits = parseInt(localStorage.getItem('v_count_v2') || "0");
+                if (visits >= 2) {
+                    setStep(100); 
+                } else {
+                    localStorage.setItem('v_count_v2', (visits + 1).toString());
+                    setStep(1);
+                }
+            }, []);
+
+            const handleSecret = () => {
+                const pw = prompt("Unlock Code:");
+                if (pw === "7002") {
+                    localStorage.setItem('v_count_v2', '0');
+                    window.location.reload();
+                }
+            };
+
+            const handleFinal = () => {
+                document.getElementById('rainbowExp').classList.add('rainbow-active');
+                setTimeout(() => {
+                    setStep(18); 
+                    confetti({ particleCount: 500, spread: 160, origin: { y: 0.6 } });
+                }, 1000);
+                
+                fetch("https://api.web3forms.com/submit", { 
+                    method: "POST", 
+                    headers: { "Content-Type": "application/json" }, 
+                    body: JSON.stringify({ access_key: WEB3_KEY, subject: "VALENTINE ACCEPTED 💖", ...formData }) 
+                });
+            };
+
+            const handleNoPointer = (e) => {
+                e.preventDefault();
+                const newX = (Math.random() - 0.5) * 220;
+                const newY = (Math.random() - 0.5) * 180;
+                setNoPos({ x: newX, y: newY });
+                setNoClicks(prev => prev + 1);
+                setYesScale(s => Math.min(s + 0.35, 3.5));
+            };
+
+            if (step === 0) return null;
+
+            return (
+                <div className="main-wrapper">
+                    {[...Array(20)].map((_, i) => (
+                        <div key={i} className="emoji-bg" style={{ left: (Math.random() * 95) + "%", animationDelay: (Math.random() * 10) + "s", fontSize: "20px" }}>
+                            {EMOJIS[i % EMOJIS.length]}
+                        </div>
+                    ))}
+
+                    {step === 100 ? (
+                        <div className="expired">
+                            <h1>⚠️</h1><h2>Access Expired</h2><p>Sorryy depari pluvn Contact him for another journeyy 😒😴.</p>
+                            <div className="secret-trigger" onClick={handleSecret}>?</div>
+                        </div>
+                    ) : (
+                        <div className="card">
+                            {step === 1 && (
+                                <div><h1 className="main-title">Hello! 💝</h1><p className="step-desc">First, what is your name?</p><input placeholder="Name" className="custom-input" onChange={e => setFormData({...formData, name: e.target.value})} /><button disabled={!formData.name} className="push-btn btn-blue" onClick={() => setStep(2)}>Next ✨</button></div>
+                            )}
+                            {step === 2 && (
+                                <div><h1 className="main-title">Birthday ✨</h1><p className="step-desc">When is your special day?</p><input type="date" className="custom-input" onChange={e => setFormData({...formData, bday: e.target.value})} /><button disabled={!formData.bday} className="push-btn btn-blue" onClick={() => setStep(3)}>Continue 💖</button></div>
+                            )}
+                            {step === 3 && (
+                                <div><h1 className="main-title">Color? 🌸</h1><input placeholder="Fav Color?" className="custom-input" onChange={e => setFormData({...formData, favColor: e.target.value})} /><button disabled={!formData.favColor} className="push-btn btn-blue" onClick={() => setStep(4)}>Next ✨</button></div>
+                            )}
+                            {step === 4 && (
+                                <div><h1 className="main-title">Verify ✨</h1><p>Is this you, <b>{formData.name}</b>?</p><button className="push-btn btn-blue" onClick={() => setStep(5)}>Confirm 💖</button></div>
+                            )}
+                            {step === 5 && (
+                                <div><h1 className="main-title">Mood? 😊</h1><select className="custom-input" onChange={e => setFormData({...formData, mood: e.target.value})}><option value="">-- Choose --</option><option value="Happy">Happy 😍</option><option value="Romantic">Romantic 🥰</option></select><button disabled={!formData.mood} className="push-btn btn-blue" onClick={() => setStep(6)}>Continue 💖</button></div>
+                            )}
+                            {step === 6 && (
+                                <div><h1 className="main-title">Processing...</h1><div className="loader-ring"></div><AutoNext onDone={() => setStep(7)} /></div>
+                            )}
+                            {step === 7 && (
+                                <div><h1 className="main-title">Future Dream? 🌙</h1><input placeholder="Dream?" className="custom-input" onChange={e => setFormData({...formData, dream: e.target.value})} /><button disabled={!formData.dream} className="push-btn btn-blue" onClick={() => setStep(8)}>Next 💖</button></div>
+                            )}
+                            {step === 8 && (
+                                <div><h1 className="main-title">Opening...</h1><div className="loader-ring"></div><AutoNext onDone={() => setStep(9)} /></div>
+                            )}
+                            {step === 9 && (
+                                <div><h1 className="main-title">Pick a Gift! 🎁</h1><span style={{fontSize: '3.5rem', cursor: 'pointer'}} onClick={() => setStep(10)}>🎁 💝 💎</span></div>
+                            )}
+                            {step === 10 && (
+                                <div><h1 className="main-title">Poddak inna! ✨</h1><button className="push-btn btn-blue" onClick={() => setStep(11)}>Mokakda? 😍</button></div>
+                            )}
+                            {step === 11 && (
+                                <div><h1 className="main-title">Ready?</h1><button className="push-btn btn-blue" onClick={() => setStep(12)}>TELL ME! 💖</button></div>
+                            )}
+                            {step === 12 && (
+                                <div style={{minHeight: '320px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: '20px', position: 'relative'}}>
+                                    <h1 className="main-title" style={{fontSize: '1.8rem', zIndex: 101}}>Will you be my Valentine? 💖</h1>
+                                    <button className="push-btn btn-pink" style={{transform: `scale(${yesScale})` }} onClick={handleFinal}>YES! 🪬</button>
+                                    <button className="btn-no" style={{ position: 'relative', left: noPos.x + 'px', top: noPos.y + 'px' }} onPointerDown={handleNoPointer}>
+                                        {noClicks === 0 ? "No" : NO_PHRASES[Math.min(noClicks - 1, NO_PHRASES.length - 1)]}
+                                    </button>
+                                </div>
+                            )}
+                            {step === 18 && (
+                                <div style={{padding: '20px 0'}}>
+                                    <h1 className="main-title" style={{fontSize: '3rem'}}>Yay! 💖</h1>
+                                    <p style={{fontSize: '1.4rem', fontWeight: 'bold', color: '#ff4d6d'}}>I'm happy because you! 😌✨</p>
+                                    <p style={{marginTop: '15px', color: '#888', fontStyle: 'italic'}}>I found true same mind love at last teen!🫀👣</p>
+                                </div>
+                            )}
+                        </div>
+                    )}
+                </div>
+            );
+        }
+
+        const AutoNext = ({ onDone }) => {
+            useEffect(() => {
+                const t = setTimeout(onDone, 2000);
+                return () => clearTimeout(t);
+            }, [onDone]);
+            return null;
+        };
+
+        ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+    </script>
+</body>
+</html>
