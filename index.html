@@ -59,17 +59,11 @@
 
         function App() {
             const [step, setStep] = useState(0); 
-            const [formData, setFormData] = useState(() => {
-                const saved = localStorage.getItem('valentine_form_v2');
-                return saved ? JSON.parse(saved) : { name: "", bday: "2007-07-29", favColor: "", mood: "", dream: "" };
-            });
+            // Save logic removed - back to standard state
+            const [formData, setFormData] = useState({ name: "", bday: "2007-07-29", favColor: "", mood: "", dream: "" });
             const [noPos, setNoPos] = useState({ x: 0, y: 0 });
             const [noClicks, setNoClicks] = useState(0);
             const [yesScale, setYesScale] = useState(1);
-
-            useEffect(() => {
-                localStorage.setItem('valentine_form_v2', JSON.stringify(formData));
-            }, [formData]);
 
             useEffect(() => {
                 let visits = parseInt(localStorage.getItem('v_count_v2') || "0");
@@ -116,7 +110,6 @@
                     newX = (Math.random() - 0.5) * 260;
                     newY = (Math.random() - 0.5) * 220;
                 } while (Math.abs(newX) < 80 && Math.abs(newY) < 60);
-
                 setNoPos({ x: newX, y: newY });
                 setNoClicks(prev => prev + 1);
                 setYesScale(s => Math.min(s + 0.35, 3.5)); 
@@ -128,13 +121,13 @@
                     {[...Array(20)].map((_, i) => ( <div key={i} className="emoji-bg" style={{ left: (Math.random() * 95) + "%", animationDelay: (Math.random() * 10) + "s", fontSize: "20px" }}> {EMOJIS[i % EMOJIS.length]} </div> ))}
                     {step === 100 ? ( <div className="expired"> <h1>⚠️</h1><h2>Access Expired</h2><p>Sorryy depari pluvn Aneww 🥹. Contact him for get Password 😒😴.</p><p style={{fontSize: '12px', opacity: 0.8, marginTop: '5px'}}>Maybe Mulinma msg ekk dpu dvs venn pluvn</p> <div className="secret-trigger" onClick={handleSecret}>?</div> </div> ) : (
                         <div className="card">
-                            {step === 1 && ( <div><h1 className="main-title">Hello! 💝</h1><p className="step-desc">First, what is your name?</p><input placeholder="Name" value={formData.name} className="custom-input" onChange={e => setFormData({...formData, name: e.target.value})} /><button disabled={!formData.name} className="push-btn btn-blue" onClick={() => setStep(2)}>Next ✨</button></div> )}
+                            {step === 1 && ( <div><h1 className="main-title">Hello! 💝</h1><p className="step-desc">First, what is your name?</p><input placeholder="Name" className="custom-input" onChange={e => setFormData({...formData, name: e.target.value})} /><button disabled={!formData.name} className="push-btn btn-blue" onClick={() => setStep(2)}>Next ✨</button></div> )}
                             {step === 2 && ( <div><h1 className="main-title">Birthday ✨</h1><p className="step-desc">When is your special day?</p><input type="date" value={formData.bday} className="custom-input" onChange={e => setFormData({...formData, bday: e.target.value})} /><button disabled={!formData.bday} className="push-btn btn-blue" onClick={() => setStep(3)}>Continue 💖</button></div> )}
-                            {step === 3 && ( <div><h1 className="main-title">Color? 🌸</h1><input placeholder="Fav Color?" value={formData.favColor} className="custom-input" onChange={e => setFormData({...formData, favColor: e.target.value})} /><button disabled={!formData.favColor} className="push-btn btn-blue" onClick={() => setStep(4)}>Next ✨</button></div> )}
+                            {step === 3 && ( <div><h1 className="main-title">Color? 🌸</h1><input placeholder="Fav Color?" className="custom-input" onChange={e => setFormData({...formData, favColor: e.target.value})} /><button disabled={!formData.favColor} className="push-btn btn-blue" onClick={() => setStep(4)}>Next ✨</button></div> )}
                             {step === 4 && ( <div><h1 className="main-title">Verify ✨</h1><p>Is this you, <b>{formData.name}</b>?</p><button className="push-btn btn-blue" onClick={() => setStep(5)}>Confirm 💖</button></div> )}
-                            {step === 5 && ( <div><h1 className="main-title">Mood? 😊</h1><select className="custom-input" value={formData.mood} onChange={e => setFormData({...formData, mood: e.target.value})}><option value="">-- Choose --</option><option value="Happy">Happy 😍</option><option value="Romantic">Romantic 🥰</option></select><button disabled={!formData.mood} className="push-btn btn-blue" onClick={() => setStep(6)}>Continue 💖</button></div> )}
+                            {step === 5 && ( <div><h1 className="main-title">Mood? 😊</h1><select className="custom-input" onChange={e => setFormData({...formData, mood: e.target.value})}><option value="">-- Choose --</option><option value="Happy">Happy 😍</option><option value="Romantic">Romantic 🥰</option></select><button disabled={!formData.mood} className="push-btn btn-blue" onClick={() => setStep(6)}>Continue 💖</button></div> )}
                             {step === 6 && ( <div><h1 className="main-title">Processing...</h1><div className="loader-ring"></div><AutoNext onDone={() => setStep(7)} /></div> )}
-                            {step === 7 && ( <div><h1 className="main-title">Future Dream? 🌙</h1><input placeholder="Dream?" value={formData.dream} className="custom-input" onChange={e => setFormData({...formData, dream: e.target.value})} /><button disabled={!formData.dream} className="push-btn btn-blue" onClick={() => setStep(8)}>Next 💖</button></div> )}
+                            {step === 7 && ( <div><h1 className="main-title">Future Dream? 🌙</h1><input placeholder="Dream?" className="custom-input" onChange={e => setFormData({...formData, dream: e.target.value})} /><button disabled={!formData.dream} className="push-btn btn-blue" onClick={() => setStep(8)}>Next 💖</button></div> )}
                             {step === 8 && ( <div><h1 className="main-title">Anee indhh...</h1><div className="loader-ring"></div><AutoNext onDone={() => setStep(9)} /></div> )}
                             {step === 9 && ( <div><h1 className="main-title">Pick a Gift! 🎁</h1><span style={{fontSize: '3.5rem', cursor: 'pointer'}} onClick={() => setStep(10)}>🎁 💝 💎</span></div> )}
                             {step === 10 && ( <div><h1 className="main-title">Poddak inna! ✨</h1><button className="push-btn btn-blue" onClick={() => setStep(11)}>Mokakda? 😍</button></div> )}
