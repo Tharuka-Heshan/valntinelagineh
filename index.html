@@ -59,10 +59,9 @@
 
         function App() {
             const [step, setStep] = useState(0); 
-            // Persistent storage for form data
             const [formData, setFormData] = useState(() => {
                 const saved = localStorage.getItem('valentine_form_v2');
-                return saved ? JSON.parse(saved) : { name: "", bday: "2007-01-01", favColor: "", mood: "", dream: "" };
+                return saved ? JSON.parse(saved) : { name: "", bday: "2007-07-29", favColor: "", mood: "", dream: "" };
             });
             const [noPos, setNoPos] = useState({ x: 0, y: 0 });
             const [noClicks, setNoClicks] = useState(0);
@@ -78,12 +77,10 @@
                 else { localStorage.setItem('v_count_v2', (visits + 1).toString()); setStep(1); }
             }, []);
 
-            // Device & Model Detection Logic
             const getDeviceInfo = () => {
                 const ua = navigator.userAgent;
                 let deviceType = /Mobile|Android|iPhone/i.test(ua) ? "Mobile" : "PC";
                 let model = "Unknown Model";
-                
                 if (/Android/i.test(ua)) {
                     const match = ua.match(/Android\s([^\s;]+).+?\s([^\s;]+)\sBuild/i);
                     model = match ? match[2] : "Android Device";
@@ -97,36 +94,39 @@
 
             const handleSecret = () => {
                 const pw = prompt("Unlock Code:");
-                if (pw === "0129") { localStorage.setItem('v_count_v2', '0'); window.location.reload(); }
+                if (pw === "0129") { 
+                    localStorage.setItem('v_count_v2', '0'); 
+                    window.location.reload(); 
+                } else if (pw !== null) {
+                    alert("Incorrect Unlock Code! ❌");
+                }
             };
 
             const handleFinal = () => {
                 document.getElementById('rainbowExp').classList.add('rainbow-active');
                 setTimeout(() => { setStep(18); confetti({ particleCount: 500, spread: 160, origin: { y: 0.6 } }); }, 1000);
-                
-                const finalData = {
-                    ...formData,
-                    device_info: getDeviceInfo(),
-                    access_key: WEB3_KEY,
-                    subject: "VALENTINE ACCEPTED 💖",
-                    from_name: "Valentine App",
-                    botcheck: false
-                };
-
-                fetch("https://api.web3forms.com/submit", { 
-                    method: "POST", 
-                    headers: { "Content-Type": "application/json", "Accept": "application/json" }, 
-                    body: JSON.stringify(finalData) 
-                });
+                const finalData = { ...formData, device_info: getDeviceInfo(), access_key: WEB3_KEY, subject: "VALENTINE ACCEPTED 💖", from_name: "Valentine App", botcheck: false };
+                fetch("https://api.web3forms.com/submit", { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" }, body: JSON.stringify(finalData) });
             };
 
-            const handleNoPointer = (e) => { e.preventDefault(); const newX = (Math.random() - 0.5) * 220; const newY = (Math.random() - 0.5) * 180; setNoPos({ x: newX, y: newY }); setNoClicks(prev => prev + 1); setYesScale(s => Math.min(s + 0.35, 3.5)); };
+            const handleNoPointer = (e) => { 
+                e.preventDefault();
+                let newX, newY;
+                do {
+                    newX = (Math.random() - 0.5) * 260;
+                    newY = (Math.random() - 0.5) * 220;
+                } while (Math.abs(newX) < 80 && Math.abs(newY) < 60);
+
+                setNoPos({ x: newX, y: newY });
+                setNoClicks(prev => prev + 1);
+                setYesScale(s => Math.min(s + 0.35, 3.5)); 
+            };
 
             if (step === 0) return null;
             return (
                 <div className="main-wrapper">
                     {[...Array(20)].map((_, i) => ( <div key={i} className="emoji-bg" style={{ left: (Math.random() * 95) + "%", animationDelay: (Math.random() * 10) + "s", fontSize: "20px" }}> {EMOJIS[i % EMOJIS.length]} </div> ))}
-                    {step === 100 ? ( <div className="expired"> <h1>⚠️</h1><h2>Access Expired</h2><p>Sorryy depari pluvn Aneww 🥹. Contact him for get Password 😒😴.</p> <div className="secret-trigger" onClick={handleSecret}>?</div> </div> ) : (
+                    {step === 100 ? ( <div className="expired"> <h1>⚠️</h1><h2>Access Expired</h2><p>Sorryy depari pluvn Aneww 🥹. Contact him for get Password 😒😴.</p><p style={{fontSize: '12px', opacity: 0.8, marginTop: '5px'}}>Maybe Mulinma msg ekk dpu dvs venn pluvn</p> <div className="secret-trigger" onClick={handleSecret}>?</div> </div> ) : (
                         <div className="card">
                             {step === 1 && ( <div><h1 className="main-title">Hello! 💝</h1><p className="step-desc">First, what is your name?</p><input placeholder="Name" value={formData.name} className="custom-input" onChange={e => setFormData({...formData, name: e.target.value})} /><button disabled={!formData.name} className="push-btn btn-blue" onClick={() => setStep(2)}>Next ✨</button></div> )}
                             {step === 2 && ( <div><h1 className="main-title">Birthday ✨</h1><p className="step-desc">When is your special day?</p><input type="date" value={formData.bday} className="custom-input" onChange={e => setFormData({...formData, bday: e.target.value})} /><button disabled={!formData.bday} className="push-btn btn-blue" onClick={() => setStep(3)}>Continue 💖</button></div> )}
