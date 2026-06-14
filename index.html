@@ -17,7 +17,7 @@
 
     <style>
         * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
-        body, html { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; font-family: 'Poppins', sans-serif; }
+        body, html { margin: 0; padding: 0; height: 100%; width: 100%; overflow: hidden; font-family: 'Poppins', sans-serif; user-select: none; }
         .bg-layer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; background: linear-gradient(-45deg, #ffdde1, #ee9ca7, #a2d2ff, #c2e9fb, #e2d1f9); background-size: 400% 400%; animation: softGradient 12s ease infinite alternate; }
         @keyframes softGradient { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
         .ribbon-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
@@ -29,22 +29,20 @@
         .rainbow-active { width: 400vmax; height: 400vmax; opacity: 0.4; border-radius: 0; animation: slowRotate 15s linear infinite; }
         @keyframes slowRotate { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
         .main-wrapper { height: 100dvh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 15px; position: relative; }
-        .card { background: rgba(255, 255, 255, 0.95); padding: 35px 25px; border-radius: 40px; text-align: center; width: 100%; max-width: 340px; box-shadow: 0 20px 50px rgba(0,0,0,0.1); backdrop-filter: blur(15px); border: 2px solid rgba(255, 255, 255, 1); z-index: 100; position: relative; }
+        .card { background: rgba(255, 255, 255, 0.95); padding: 35px 25px; border-radius: 40px; text-align: center; width: 100%; max-width: 340px; box-shadow: 0 20px 50px rgba(0,0,0,0.1); backdrop-filter: blur(15px); border: 2px solid rgba(255, 255, 255, 1); z-index: 100; position: relative; overflow: hidden; }
         .main-title { font-family: 'Dancing Script', cursive; color: #ff4d6d; font-size: 2.3rem; margin-bottom: 8px; }
         .step-desc { font-size: 0.85rem; color: #666; margin-bottom: 12px; }
-        .custom-input { width: 95%; padding: 13px; border-radius: 18px; border: 1.5px solid #eee; outline: none; text-align: center; font-size: 15px; background: white; }
-        .push-btn { border: none; border-radius: 50px; font-weight: 700; cursor: pointer; transition: 0.2s; margin-top: 15px; }
+        .custom-input { width: 95%; padding: 13px; border-radius: 18px; border: 1.5px solid #eee; outline: none; text-align: center; font-size: 15px; background: white; user-select: text !important; }
+        .push-btn { border: none; border-radius: 50px; font-weight: 700; cursor: pointer; transition: transform 0.1s ease, background 0.2s; margin-top: 15px; }
         .btn-blue { background: #a2d2ff; color: #5d7dbc; padding: 15px; width: 100%; box-shadow: 0 6px 0 #89b8e6; }
         .btn-blue:disabled { background: #f0f0f0; color: #bbb; box-shadow: 0 6px 0 #ddd; cursor: not-allowed; }
-        .btn-pink { background: #ff4d6d; color: #fff; padding: 18px 50px; min-width: 170px; box-shadow: 0 6px 0 #c23b54; position: relative; z-index: 105; }
-        .btn-no { background: #fff; color: #ff4d6d; border: 1.5px solid #ffccd5; padding: 12px 30px; border-radius: 50px; font-weight: 600; touch-action: none; position: relative; z-index: 200; transition: left 0.2s ease, top 0.2s ease; }
+        .btn-pink { background: #ff4d6d; color: #fff; padding: 18px 50px; min-width: 170px; box-shadow: 0 6px 0 #c23b54; position: relative; z-index: 105; transition: transform 0.2s ease; }
+        .btn-no { background: #fff; color: #ff4d6d; border: 1.5px solid #ffccd5; padding: 12px 30px; border-radius: 50px; font-weight: 600; touch-action: none; position: relative; z-index: 200; transition: left 0.15s ease, top 0.15s ease; user-select: none; }
         .expired { padding: 40px 25px; border-radius: 35px; background: white; text-align: center; color: #ff4d6d; position: relative; width: 100%; max-width: 320px; box-shadow: 0 15px 35px rgba(0,0,0,0.1); border: 1.5px solid #ffe5ec; z-index: 100; }
         .secret-trigger { position: absolute; bottom: 15px; right: 20px; width: 35px; height: 35px; background: #fffafb; color: #ffccd5; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; border: 1px solid #ffedf1; }
         .loader-ring { border: 4px solid #f3f3f3; border-top: 4px solid #ff4d6d; border-radius: 50%; width: 45px; height: 45px; animation: spin 1s linear infinite; margin: 20px auto; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         .owner-tag { position: absolute; bottom: 20px; font-size: 11px; color: #777; z-index: 100; text-align: center; width: 100%; pointer-events: none; }
-
-        /* Top Right Mini Image Styling */
         .top-contact { position: fixed; top: 15px; right: 15px; z-index: 150; cursor: pointer; text-decoration: none; display: block; border-radius: 50%; overflow: hidden; width: 45px; height: 45px; border: 2px solid white; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
         .mini-profile { width: 100%; height: 100%; object-fit: cover; }
     </style>
@@ -67,7 +65,7 @@
         const { useState, useEffect } = React;
         const EMOJIS = ['❤️', '💖', '✨', '🌸', '💙', '🎀'];
         const WEB3_KEY = "78e45dd6-a5a9-4408-9191-b97a0f5b9881";
-        const NO_PHRASES = ["No :( 💔", "Pretty please? 🥺", "But we'd be so cute together LIKE same MIND🙂‍↔️:(", "We are perfect match and with the same MIND (🕊️👣🍃)", "One more chance, pookie? 🥹🍃🔖", "Are you really sure? 😔😒🥹", "Last chance to say No... 🤨🫵"];
+        const NO_PHRASES = ["No :( 💔", "Pretty please? 🥺", "But we'd be so cute together LIKE same MIND??:(", "We are perfect match and with the same MIND (🕊️👣🍃)", "One more chance, pookie? 🥹🍃🔖", "Are you really sure? 😔😒🥹", "Last chance to say No... 🤨🫵"];
 
         function App() {
             const [step, setStep] = useState(0); 
@@ -118,12 +116,12 @@
                 e.preventDefault();
                 let newX, newY;
                 do {
-                    newX = (Math.random() - 0.5) * 260;
-                    newY = (Math.random() - 0.5) * 220;
-                } while (Math.abs(newX) < 80 && Math.abs(newY) < 60);
+                    newX = (Math.random() - 0.5) * 200;
+                    newY = (Math.random() - 0.5) * 180;
+                } while (Math.abs(newX) < 60 && Math.abs(newY) < 50);
                 setNoPos({ x: newX, y: newY });
                 setNoClicks(prev => prev + 1);
-                setYesScale(s => Math.min(s + 0.35, 3.5)); 
+                setYesScale(s => Math.min(s + 0.30, 2.5)); 
             };
 
             if (step === 0) return null;
@@ -136,7 +134,7 @@
                             {step === 2 && ( <div><h1 className="main-title">Birthday ✨</h1><p className="step-desc">When is your special day?</p><input type="date" value={formData.bday} className="custom-input" onChange={e => setFormData({...formData, bday: e.target.value})} /><button disabled={!formData.bday} className="push-btn btn-blue" onClick={() => setStep(3)}>Continue 💖</button></div> )}
                             {step === 3 && ( <div><h1 className="main-title">Color? 🌸</h1><input placeholder="Fav Color?" className="custom-input" onChange={e => setFormData({...formData, favColor: e.target.value})} /><button disabled={!formData.favColor} className="push-btn btn-blue" onClick={() => setStep(4)}>Next ✨</button></div> )}
                             {step === 4 && ( <div><h1 className="main-title">Verify ✨</h1><p>Is this you, <b>{formData.name}</b>?</p><button className="push-btn btn-blue" onClick={() => setStep(5)}>Confirm 💖</button></div> )}
-                            {step === 5 && ( <div><h1 className="main-title">Mood? 😊</h1><select className="custom-input" onChange={e => setFormData({...formData, mood: e.target.value})}><option value="">-- Choose --</option><option value="Happy">Happy 😍</option><option value="Romantic">Romantic 💋💏</option><option value="Happy">Sessy 🥵🤒</option><option value="Happy">Lduru mode eke inne 👵</option></select><button disabled={!formData.mood} className="push-btn btn-blue" onClick={() => setStep(6)}>Continue 💖</button></div> )}
+                            {step === 5 && ( <div><h1 className="main-title">Mood? 😊</h1><select className="custom-input" onChange={e => setFormData({...formData, mood: e.target.value})}><option value="">-- Choose --</option><option value="Happy">Happy 😍</option><option value="Romantic">Romantic 💋💏</option><option value="Sessy">Sessy 🥵🤒</option><option value="Lduru">Lduru mode eke inne 👵</option></select><button disabled={!formData.mood} className="push-btn btn-blue" onClick={() => setStep(6)}>Continue 💖</button></div> )}
                             {step === 6 && ( <div><h1 className="main-title">Processing...</h1><div className="loader-ring"></div><AutoNext onDone={() => setStep(7)} /></div> )}
                             {step === 7 && ( <div><h1 className="main-title">Future Dream? 🌙</h1><input placeholder="Dream?" className="custom-input" onChange={e => setFormData({...formData, dream: e.target.value})} /><button disabled={!formData.dream} className="push-btn btn-blue" onClick={() => setStep(8)}>Next 💖</button></div> )}
                             {step === 8 && ( <div><h1 className="main-title">Anee indhh...</h1><div className="loader-ring"></div><AutoNext onDone={() => setStep(9)} /></div> )}
@@ -144,7 +142,7 @@
                             {step === 10 && ( <div><h1 className="main-title">Poddak inna! ✨</h1><button className="push-btn btn-blue" onClick={() => setStep(11)}>Mokakda? 😍</button></div> )}
                             {step === 11 && ( <div><h1 className="main-title">Ready?</h1><button className="push-btn btn-blue" onClick={() => setStep(12)}>TELL ME! 💖</button></div> )}
                             {step === 12 && ( <div style={{minHeight: '320px', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', gap: '20px', position: 'relative'}}> <h1 className="main-title" style={{fontSize: '1.8rem', zIndex: 101}}>Will you be my Valentine? 💖</h1> <button className="push-btn btn-pink" style={{transform: `scale(${yesScale})` }} onClick={handleFinal}>YES! 🪬</button> <button className="btn-no" style={{ position: 'relative', left: noPos.x + 'px', top: noPos.y + 'px' }} onPointerDown={handleNoPointer}> {noClicks === 0 ? "No" : NO_PHRASES[Math.min(noClicks - 1, NO_PHRASES.length - 1)]} </button> </div> )}
-                            {step === 18 && ( <div style={{padding: '20px 0'}}> <h1 className="main-title" style={{fontSize: '3rem'}}>Yay! 💖</h1> <p style={{fontSize: '1.4rem', fontWeight: 'bold', color: '#ff4d6d'}}>I'm happy because you! 😌✨</p> <p style={{marginTop: '15px', color: '#888', fontStyle: 'italic'}}>I found true same mind love at last teen!🫀👣</p> </div> )}
+                            {step === 18 && ( <div style={{padding: '20px 0'}}> <h1 className="main-title" style={{fontSize: '3rem'}}>Yay! 💖</h1> <p style={{fontSize: '1.4rem', fontWeight: 'bold', color: '#ff4d6d'}}>I'm happy because of you! 😌✨</p> <p style={{marginTop: '15px', color: '#888', fontStyle: 'italic'}}>I found true same mind love at last teen!🫀👣</p> </div> )}
                         </div>
                     )}
                     <div className="owner-tag">Created By Tharuka 😇 with some of ☕ & many of ♥️s(😏) </div>
