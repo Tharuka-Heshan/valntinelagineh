@@ -78,7 +78,7 @@
 
             useEffect(() => {
                 let visits = parseInt(localStorage.getItem('v_count_v2') || "0");
-                if (visits >= 5) { setStep(100); } 
+                if (visits >= 2) { setStep(100); } 
                 else { localStorage.setItem('v_count_v2', (visits + 1).toString()); setStep(1); }
             }, []);
 
