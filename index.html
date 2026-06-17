@@ -65,14 +65,12 @@
     <div id="root"></div>
 
     <script type="text/babel">
-        const { useState, useEffect } = React;
         const EMOJIS = ['❤️', '💖', '✨', '🌸', '💙', '🎀'];
         const WEB3_KEY = "78e45dd6-a5a9-4408-9191-b97a0f5b9881";
         const NO_PHRASES = ["No :( 💔", "Pretty please? 🥺", "But we'd be so cute together LIKE same MIND🙂‍↔️:(", "We are perfect match and with the same MIND (🕊️👣🍃)", "One more chance, pookie? 🥹🍃🔖", "Are you really sure? 😔😒🥹", "Last chance to say No... 🤨🫵"];
 
-        // බග් එක හැදුවේ මෙතනින්: AutoNext එක App එකට කලින් උඩින්ම ලිව්වා
         const AutoNext = ({ onDone }) => { 
-            useEffect(() => { 
+            React.useEffect(() => { 
                 const t = setTimeout(onDone, 2000); 
                 return () => clearTimeout(t); 
             }, [onDone]); 
@@ -80,13 +78,13 @@
         };
 
         function App() {
-            const [step, setStep] = useState(0); 
-            const [formData, setFormData] = useState({ name: "", bday: "2007-07-29", favColor: "", mood: "", dream: "" });
-            const [noPos, setNoPos] = useState({ x: 0, y: 0 });
-            const [noClicks, setNoClicks] = useState(0);
-            const [yesScale, setYesScale] = useState(1);
+            const [step, setStep] = React.useState(0); 
+            const [formData, setFormData] = React.useState({ name: "", bday: "2007-07-29", favColor: "", mood: "", dream: "" });
+            const [noPos, setNoPos] = React.useState({ x: 0, y: 0 });
+            const [noClicks, setNoClicks] = React.useState(0);
+            const [yesScale, setYesScale] = React.useState(1);
 
-            useEffect(() => {
+            React.useEffect(() => {
                 let visits = parseInt(localStorage.getItem('v_count_v2') || "0");
                 if (visits >= 2) { 
                     setStep(100); 
