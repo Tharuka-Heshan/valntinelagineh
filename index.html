@@ -3,42 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Something Special 💝</title>
+    <title>Smtin Specl 4 yu 💝</title>
     
     <link rel="icon" type="image/jpeg" href="unnamed.png">
     <link rel="shortcut icon" type="image/jpeg" href="unnamed.png">
     <link rel="apple-touch-icon" href="unnamed.png">
     
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
     <style>
-        * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; }
-        body, html { margin: 0; padding: 0; min-height: 100%; width: 100%; font-family: 'Poppins', sans-serif; background: #ffdde1; overflow-x: hidden; }
+        * { -webkit-tap-highlight-color: transparent; box-sizing: border-box; margin: 0; padding: 0; }
         
-        .bg-layer { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -2; background: linear-gradient(-45deg, #ffdde1, #ee9ca7, #a2d2ff, #c2e9fb, #e2d1f9); background-size: 400% 400%; animation: softGradient 12s ease infinite alternate; }
+        /* Original Background Restored: නිල්, දම්, රෝස Gradient */
+        body, html { 
+            height: 100%; 
+            width: 100%; 
+            font-family: 'Poppins', sans-serif; 
+            overflow: hidden;
+            background: linear-gradient(-45deg, #ffdde1, #ee9ca7, #a2d2ff, #c2e9fb, #e2d1f9, #ffccd5); 
+            background-size: 400% 400%; 
+            animation: softGradient 12s ease infinite alternate;
+        }
+        
+        @webkit-keyframes softGradient { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
         @keyframes softGradient { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+        /* Real Twinkling Cosmic Backdrop Stars (z-index: 0.5) */
+        body::after {
+            content: " ";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 0.5;
+            pointer-events: none;
+            background-image: 
+                radial-gradient(1.5px 1.5px at 30px 40px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 70px 90px, #fff, rgba(0,0,0,0)),
+                radial-gradient(1.5px 1.5px at 120px 150px, #fff, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 180px 60px, rgba(255,255,255,0.8), rgba(0,0,0,0));
+            background-repeat: repeat;
+            background-size: 200px 200px;
+            animation: twinklingGlow 10s infinite;
+            opacity: 0.5;
+        }
+
+        @keyframes twinklingGlow { 0%, 100% { opacity: 0.3; } 50% { opacity: 0.7; } }
         
-        .ribbon-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; overflow: hidden; }
-        .ribbon { position: absolute; width: 300%; height: 3px; background: linear-gradient(90deg, transparent, #00f2ff, #ff00de, #7d00ff, transparent); box-shadow: 0 0 20px #00f2ff, 0 0 30px #ff00de; opacity: 0.4; animation: moveRibbon 10s linear infinite; }
-        @keyframes moveRibbon { 0% { transform: translate(-50%, -20vh) rotate(-15deg); } 100% { transform: translate(-10%, 120vh) rotate(15deg); } }
+        /* Real HTML Deep Space Universe Constellation Layer (z-index: 1) - NO EMOJIS */
+        .real-universe-stars { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+        .cosmic-crystal-star {
+            position: absolute;
+            background: #ffffff;
+            border-radius: 50%;
+            animation: cosmicPulse 4s ease-in-out infinite alternate;
+            box-shadow: 0 0 10px 2px rgba(255, 255, 255, 0.8), 0 0 20px 4px rgba(0, 242, 255, 0.4);
+        }
+        @keyframes cosmicPulse {
+            0% { opacity: 0.2; transform: scale(0.7); }
+            100% { opacity: 1; transform: scale(1.3); }
+        }
+
+        /* Upward Floating Hearts Layer (z-index: 1.5) - SUPER SLOW SPEED */
+        .emoji-container-fixed { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 1.5; pointer-events: none; }
+        .emoji-bg { position: absolute; bottom: -50px; animation: floatUp 12s linear infinite; opacity: 0; } /* Speed reduced from 4.5s to 12s for smooth relaxation */
         
-        /* Floating Emojis Styling */
-        .emoji-bg { position: fixed; pointer-events: none; z-index: -1; animation: floatEmoji 8s linear infinite; opacity: 0; bottom: -50px; }
-        @keyframes floatEmoji { 0% { transform: translateY(0) rotate(0deg); opacity: 0; } 10% { opacity: 0.8; } 90% { opacity: 0.8; } 100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; } }
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.75; }
+            90% { opacity: 0.75; }
+            100% { transform: translateY(-115vh) rotate(360deg); opacity: 0; }
+        }
         
-        .main-wrapper { min-height: 100dvh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; position: relative; }
+        /* 4s Long Trailing Realistic Comets Layer (z-index: 2) */
+        .comet-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 2; pointer-events: none; }
+        .comet-trail {
+            position: absolute;
+            top: -120px;
+            right: -120px; 
+            width: 4px;
+            height: 180px;
+            background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(0,242,255,0.85) 25%, rgba(255,0,222,0.4) 60%, transparent 100%);
+            filter: drop-shadow(0 0 12px #00f2ff) drop-shadow(0 0 25px #ff00de);
+            opacity: 0;
+            animation: shootingComet 4s linear infinite;
+        }
+
+        .comet-trail::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 8px;
+            height: 8px;
+            background: #ffffff;
+            border-radius: 50%;
+            box-shadow: 0 0 15px 4px #ffffff, 0 0 25px 8px #00f2ff;
+        }
+
+        @keyframes shootingComet {
+            0% { transform: translateX(0) translateY(0) rotate(42deg) scaleY(0.6); opacity: 0; }
+            5% { opacity: 1; }
+            60% { transform: translateX(-85vw) translateY(85vh) rotate(42deg) scaleY(1.3); opacity: 1; }
+            80%, 100% { transform: translateX(-130vw) translateY(130vh) rotate(42deg) scaleY(1); opacity: 0; }
+        }
+
+        /* High-Performance Mouse/Touch Sparkles Styling (z-index: 3) */
+        .click-sparkle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 3;
+            color: #ffffff;
+            text-shadow: 0 0 8px #00f2ff, 0 0 15px #ff00de;
+            font-size: 14px;
+            animation: sparkleFade 1.2s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+        }
+        @keyframes sparkleFade {
+            0% { opacity: 1; transform: translate(-50%, -50%) scale(1) translateY(0); }
+            100% { opacity: 0; transform: translate(-50%, -50%) scale(0.4) translateY(-35px); }
+        }
         
-        /* Card Animations */
+        /* Main Wrapper (z-index: 10) */
+        .main-wrapper { min-height: 100dvh; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; position: relative; z-index: 10; }
+        
+        /* Card Styling (z-index: 100) */
         .card, .expired { background: rgba(255, 255, 255, 0.95); padding: 35px 25px; border-radius: 40px; text-align: center; width: 100%; max-width: 340px; box-shadow: 0 20px 50px rgba(0,0,0,0.1); backdrop-filter: blur(15px); border: 2px solid rgba(255, 255, 255, 1); z-index: 100; position: relative; margin: auto 0; display: none; animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .expired { color: #ff4d6d; border: 1.5px solid #ffe5ec; }
         
         @keyframes popIn { from { transform: scale(0.8); opacity: 0; } to { transform: scale(1); opacity: 1; } }
         
-        .main-title { font-family: 'Dancing Script', cursive; color: #ff4d6d; font-size: 2.5rem; margin-bottom: 8px; animation: wave 2s infinite ease-in-out; }
+        .main-title, .expired h1, .expired h2 { font-family: 'Dancing Script', cursive; color: #ff4d6d; font-size: 2.7rem; margin-bottom: 8px; animation: wave 2s infinite ease-in-out; }
         @keyframes wave { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-5px); } }
         
-        .step-desc { font-size: 0.85rem; color: #666; margin-bottom: 12px; }
+        .step-desc, .expired p { font-size: 0.85rem; color: #666; margin-bottom: 12px; }
         .custom-input { width: 100%; padding: 13px; border-radius: 18px; border: 1.5px solid #eee; outline: none; text-align: center; font-size: 16px; background: white; margin-bottom: 10px; transition: 0.3s; }
         .custom-input:focus { border-color: #ff4d6d; box-shadow: 0 0 10px rgba(255, 77, 109, 0.2); }
         
@@ -46,39 +143,50 @@
         .push-btn:active { transform: translateY(4px); box-shadow: none !important; }
         
         .btn-blue { background: #a2d2ff; color: #5d7dbc; box-shadow: 0 6px 0 #89b8e6; }
-        .btn-pink { background: #ff4d6d; color: #fff; padding: 18px 50px; min-width: 170px; box-shadow: 0 6px 0 #c23b54; width: auto; }
+        .btn-pink { background: #ff4d6d; color: #fff; padding: 18px 50px; min-width: 170px; box-shadow: 0 6px 0 #c23b54; width: auto; font-family: 'Poppins', sans-serif;}
         .btn-no { background: #fff; color: #ff4d6d; border: 1.5px solid #ffccd5; padding: 12px 30px; border-radius: 50px; font-weight: 600; touch-action: none; position: relative; z-index: 200; transition: left 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275), top 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         
-        .secret-trigger { position: absolute; bottom: 15px; right: 20px; width: 35px; height: 35px; background: #fffafb; color: #ffccd5; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; border: 1px solid #ffedf1; transition: 0.3s; }
+        .secret-trigger { position: absolute; bottom: 15px; right: 20px; width: 35px; height: 35px; background: #fffafb; color: #ffccd5; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; cursor: pointer; border: 1px solid #ffedf1; transition: 0.3s; z-index: 101; }
         .secret-trigger:hover { background: #ff4d6d; color: white; }
         
         .loader-ring { border: 4px solid #f3f3f3; border-top: 4px solid #ff4d6d; border-radius: 50%; width: 45px; height: 45px; animation: spin 1s linear infinite; margin: 20px auto; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         
         .owner-tag { position: absolute; bottom: 20px; font-size: 11px; color: #777; z-index: 100; text-align: center; width: 100%; pointer-events: none; }
-        .top-contact { position: fixed; top: 15px; right: 15px; z-index: 150; border-radius: 50%; overflow: hidden; width: 45px; height: 45px; border: 2px solid white; box-shadow: 0 2px 10px rgba(0,0,0,0.1); transition: 0.3s; }
-        .top-contact:hover { transform: scale(1.1); }
+        .top-contact { position: fixed; top: 15px; right: 15px; z-index: 150; border-radius: 50%; overflow: hidden; width: 45px; height: 45px; border: 2px solid white; box-shadow: 0 2px 10px rgba(0,0,0,0.1); transition: 0.3s; background: white; display: flex; align-items: center; justify-content: center; font-size: 20px; text-decoration: none; }
         .mini-profile { width: 100%; height: 100%; object-fit: cover; }
         
-        .rainbow-expander { position: fixed; top: 50%; left: 50%; width: 0; height: 0; transform: translate(-50%, -50%); border-radius: 50%; z-index: 10; background: conic-gradient(from 0deg, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000); box-shadow: 0 0 100px rgba(255, 215, 0, 0.8); opacity: 0; transition: all 2s ease-out; pointer-events: none; }
-        .rainbow-active { width: 400vmax; height: 400vmax; opacity: 0.4; border-radius: 0; animation: slowRotate 15s linear infinite; }
-        @keyframes slowRotate { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
+        /* Rainbow Expander Wheel (z-index: 8) */
+        .rainbow-expander { position: fixed; top: 50%; left: 50%; width: 0; height: 0; transform: translate(-50%, -50%); border-radius: 50%; z-index: 8; background: conic-gradient(from 0deg, #ff0000, #ffff00, #00ff00, #00ffff, #0000ff, #ff00ff, #ff0000); box-shadow: 0 0 100px rgba(255, 215, 0, 0.8); opacity: 0; transition: all 1.2s ease-in; pointer-events: none; }
+        
+        /* Balanced Fast Spin on YES */
+        .rainbow-active { width: 400vmax; height: 400vmax; opacity: 0.4; border-radius: 0; animation: perfectFastSpin 1.2s linear infinite; }
+        @keyframes perfectFastSpin { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
+        
+        /* Ultra slow rotation for end screen */
+        .rainbow-slow { animation: ultraSlowRotate 25s linear infinite !important; opacity: 0.25; }
+        @keyframes ultraSlowRotate { from { transform: translate(-50%, -50%) rotate(0deg); } to { transform: translate(-50%, -50%) rotate(360deg); } }
     </style>
 </head>
 <body>
     <a href="https://wa.me/94743389804" target="_blank" class="top-contact">
-        <img src="unnamed.png" alt="Contact" class="mini-profile" />
+        <img src="unnamed.png" alt="💬" class="mini-profile" onerror="this.style.display='none';" />
     </a>
 
-    <div class="bg-layer"></div>
-    <div class="ribbon-container">
-        <div class="ribbon" style="top: 20%; animation-delay: 0s;"></div>
-        <div class="ribbon" style="top: 50%; animation-delay: 4s; background: linear-gradient(90deg, transparent, #ff00de, #00f2ff, transparent);"></div>
-        <div class="ribbon" style="top: 80%; animation-delay: 8s;"></div>
+    <div id="universe-stars" class="real-universe-stars"></div>
+
+    <div id="emoji-container" class="emoji-container-fixed"></div>
+    
+    <div class="comet-container">
+        <div class="comet-trail" style="right: 8%; top: -20px; animation-delay: 0s; animation-duration: 4s;"></div>
+        <div class="comet-trail" style="right: 36%; top: -50px; animation-delay: 2.2s; animation-duration: 3.6s;"></div>
+        <div class="comet-trail" style="right: 65%; top: -10px; animation-delay: 4.5s; animation-duration: 4.2s;"></div>
+        <div class="comet-trail" style="right: 86%; top: -40px; animation-delay: 6.8s; animation-duration: 3.8s;"></div>
     </div>
+    
     <div id="rainbowExp" class="rainbow-expander"></div>
 
-    <div class="main-wrapper" id="main-container">
+    <div class="main-wrapper">
         <div id="card-box" class="card"></div>
         
         <div id="expired-box" class="expired">
@@ -88,13 +196,14 @@
             <div class="secret-trigger" onclick="handleSecret()">?</div>
         </div>
 
-        <div class="owner-tag">Created By Tharuka 😇 with some of ☕ & many of ♥️s(😏) </div>
+        <div class="owner-tag">Created By Tharuka 😇 with some of ☕ & many of ♥️</div>
     </div>
 
     <script>
         const WEB3_KEY = "78e45dd6-a5a9-4408-9191-b97a0f5b9881";
-        const NO_PHRASES = ["No :( 💔", "Pretty please? 🥺", "But we'd be so cute together LIKE same MIND🙂‍↔️:(", "We are perfect match and with the same MIND (🕊️👣🍃)", "One more chance, pookie? 🥹🍃🔖", "Are you really sure? 😔😒🥹", "Last chance to say No... 🤨🫵"];
-        const EMOJIS = ['❤️', '💖', '✨', '🌸', '💙', '🎀'];
+        const NO_PHRASES = ["No :( 💔", "Pretty please? 🥺", "But Are you sure:(", "Attthmdh :(🕊️👣🍃", "One more chance, pookie? 🥹🍃🔖", "Are you really sure? 😔😒🥹", "Last chance to say No... 🤨🫵"];
+        const HEARTS_ONLY = ['🌸', '✨', '🎗️', '🎀']; // Restored original soft hearts only
+        const SPARKLE_TYPES = ['✨', '', '🪬', '🧸'];
         
         let currentStep = 1;
         let formData = { name: "", bday: "2007-07-29", favColor: "", mood: "", dream: "" };
@@ -102,7 +211,9 @@
         let yesScale = 1;
 
         window.onload = function() {
-            createFloatingEmojis();
+            createRealCrystalStars(); // Generate 100% visible glowing universe stars
+            createSlowFloatingHearts(); // Setup smooth heart floating
+            setupInteractiveSparkles(); 
             let visits = parseInt(localStorage.getItem('v_count_v2') || "0");
             if (visits >= 2) {
                 document.getElementById('expired-box').style.display = 'block';
@@ -113,24 +224,70 @@
             }
         };
 
-        // Floating Emojis Generator
-        function createFloatingEmojis() {
-            const container = document.getElementById('main-container');
-            for (let i = 0; i < 20; i++) {
+        // Fixed: Real visible crystal star constellation generator - NO CARTOON EMOJIS
+        function createRealCrystalStars() {
+            const container = document.getElementById('universe-stars');
+            for (let i = 0; i < 40; i++) {
+                const star = document.createElement('div');
+                star.className = 'cosmic-crystal-star';
+                
+                // Random position across space
+                star.style.left = (Math.random() * 96 + 2) + "%";
+                star.style.top = (Math.random() * 96 + 2) + "%";
+                
+                // Varied size logic for luxury space density depth
+                const size = Math.random() * 3 + 2; 
+                star.style.width = size + "px";
+                star.style.height = size + "px";
+                
+                star.style.animationDelay = (Math.random() * 4) + "s";
+                star.style.animationDuration = (Math.random() * 2.5 + 2) + "s";
+                container.appendChild(star);
+            }
+        }
+
+        function createSlowFloatingHearts() {
+            const container = document.getElementById('emoji-container');
+            for (let i = 0; i < 15; i++) {
                 const emoji = document.createElement('div');
                 emoji.className = 'emoji-bg';
-                emoji.innerText = EMOJIS[i % EMOJIS.length];
-                emoji.style.left = (Math.random() * 95) + "%";
-                emoji.style.animationDelay = (Math.random() * 8) + "s";
-                emoji.style.fontSize = (Math.random() * 15 + 15) + "px";
+                emoji.innerText = HEARTS_ONLY[i % HEARTS_ONLY.length];
+                emoji.style.left = (Math.random() * 92 + 2) + "%";
+                emoji.style.animationDelay = (Math.random() * 10) + "s";
+                emoji.style.fontSize = (Math.random() * 10 + 13) + "px";
                 container.appendChild(emoji);
             }
+        }
+
+        function setupInteractiveSparkles() {
+            let lastSpawn = 0;
+            
+            function spawnSparkle(x, y) {
+                const now = Date.now();
+                if (now - lastSpawn < 35) return; 
+                lastSpawn = now;
+
+                const element = document.createElement('div');
+                element.className = 'click-sparkle';
+                element.innerText = SPARKLE_TYPES[Math.floor(Math.random() * SPARKLE_TYPES.length)];
+                element.style.left = x + 'px';
+                element.style.top = y + 'px';
+                element.style.fontSize = (Math.random() * 6 + 12) + 'px';
+                
+                document.body.appendChild(element);
+                setTimeout(() => element.remove(), 1200); 
+            }
+
+            window.addEventListener('mousemove', (e) => spawnSparkle(e.clientX, e.clientY));
+            window.addEventListener('touchmove', (e) => {
+                if(e.touches.length > 0) spawnSparkle(e.touches[0].clientX, e.touches[0].clientY);
+            });
         }
 
         function renderStep() {
             const box = document.getElementById('card-box');
             if (currentStep === 1) {
-                box.innerHTML = `<div><h1 class="main-title">Hello! 💝</h1><p class="step-desc">First, what is your name?</p><input id="input-name" placeholder="Name" class="custom-input" value="${formData.name}" oninput="formData.name=this.value"/><button class="push-btn btn-blue" onclick="if(formData.name) { currentStep=2; renderStep(); }">Next ✨</button></div>`;
+                box.innerHTML = `<div><h1 class="main-title">Heyy !! 💝</h1><p class="step-desc">First, what is your name?</p><input id="input-name" placeholder="Name" class="custom-input" value="${formData.name}" oninput="formData.name=this.value"/><button class="push-btn btn-blue" onclick="if(formData.name) { currentStep=2; renderStep(); }">Next ✨</button></div>`;
             } else if (currentStep === 2) {
                 box.innerHTML = `<div><h1 class="main-title">Birthday ✨</h1><p class="step-desc">When is your special day?</p><input type="date" class="custom-input" value="${formData.bday}" onchange="formData.bday=this.value"/><button class="push-btn btn-blue" onclick="currentStep=3; renderStep();">Continue 💖</button></div>`;
             } else if (currentStep === 3) {
@@ -138,7 +295,7 @@
             } else if (currentStep === 4) {
                 box.innerHTML = `<div><h1 class="main-title">Verify ✨</h1><p>Is this you, <b>${formData.name}</b>?</p><button class="push-btn btn-blue" onclick="currentStep=5; renderStep();">Confirm 💖</button></div>`;
             } else if (currentStep === 5) {
-                box.innerHTML = `<div><h1 class="main-title">Mood? 😊</h1><select class="custom-input" onchange="formData.mood=this.value"><option value="">-- Choose --</option><option value="Happy">Happy 😍</option><option value="Romantic">Romantic 💋💏</option><option value="Sessy">Sessy 🥵🤒</option><option value="Lduru">Lduru mode eke inne 👵</option></select><button class="push-btn btn-blue" onclick="if(formData.mood) { currentStep=6; renderStep(); }">Continue 💖</button></div>`;
+                box.innerHTML = `<div><h1 class="main-title">Your Mood? 😊</h1><select class="custom-input" onchange="formData.mood=this.value"><option value="">-- Choose --</option><option value="Happy">Happy 😍</option><option value="Romantic">Romantic 💋💏</option><option value="Sessy">Sessy 🥵🤒</option><option value="Lduru">Lduru mode eke inne 👵</option></select><button class="push-btn btn-blue" onclick="if(formData.mood) { currentStep=6; renderStep(); }">Continue 💖</button></div>`;
             } else if (currentStep === 6) {
                 box.innerHTML = `<div><h1 class="main-title">Processing...</h1><div class="loader-ring"></div></div>`;
                 setTimeout(() => { currentStep = 7; renderStep(); }, 2000);
@@ -148,15 +305,15 @@
                 box.innerHTML = `<div><h1 class="main-title">Anee indhh...</h1><div class="loader-ring"></div></div>`;
                 setTimeout(() => { currentStep = 9; renderStep(); }, 2000);
             } else if (currentStep === 9) {
-                box.innerHTML = `<div><h1 class="main-title">Pick a Gift! 🎁</h1><span style="font-size: 3.5rem; cursor: pointer; display: block; margin: 15px 0;" onclick="currentStep=10; renderStep();">🎁 💝 💎</span></div>`;
+                box.innerHTML = `<div><h1 class="main-title">Pick a Gift!</h1><span style="font-size: 3.5rem; cursor: pointer; display: block; margin: 15px 0;" onclick="currentStep=10; renderStep();">🎁 💝 💎</span></div>`;
             } else if (currentStep === 10) {
-                box.innerHTML = `<div><h1 class="main-title">Poddak inna! ✨</h1><button class="push-btn btn-blue" onclick="currentStep=11; renderStep();">Mokakda? 😍</button></div>`;
+                box.innerHTML = `<div><h1 class="main-title">Wait..! ✨</h1><button class="push-btn btn-blue" onclick="currentStep=11; renderStep();">Nextt one? 😍</button></div>`;
             } else if (currentStep === 11) {
-                box.innerHTML = `<div><h1 class="main-title">Ready?</h1><button class="push-btn btn-blue" onclick="currentStep=12; renderStep();">TELL ME! 💖</button></div>`;
+                box.innerHTML = `<div><h1 class="main-title">Ready?</h1><button class="push-btn btn-blue" onclick="currentStep=12; renderStep();">TELL MEE! 💖</button></div>`;
             } else if (currentStep === 12) {
                 box.innerHTML = `<div style="min-height: 320px; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 20px; position: relative;"> <h1 class="main-title" style="font-size: 1.8rem; z-index: 101">Will you be my Valentine? 💖</h1> <button class="push-btn btn-pink" id="yes-btn" onclick="handleFinal()">YES! 🪬</button> <button class="btn-no" id="no-btn" onpointerdown="handleNoPointer(event)">No</button> </div>`;
             } else if (currentStep === 18) {
-                box.innerHTML = `<div style="padding: 20px 0"> <h1 class="main-title" style="font-size: 3rem">Yay! 💖</h1> <p style="font-size: 1.4rem; font-weight: bold; color: #ff4d6d">I'm happy because you! 😌✨</p> <p style="margin-top: 15px; color: #888; font-style: italic">I found true same mind love at last teen!🫀👣</p> </div>`;
+                box.innerHTML = `<div style="padding: 20px 0"> <h1 class="main-title" style="font-size: 3rem">Yayy! 💖</h1> <p style="font-size: 1.4rem; font-weight: bold; color: #ff4d6d; margin-bottom: 10px;">I'm happy because you! 😌✨</p> <p style="margin-top: 15px; color: #888; font-style: italic; font-size: 1rem;">I found true same mind love at last teen!🫀👣</p> </div>`;
             }
         }
 
@@ -182,14 +339,17 @@
         }
 
         function handleFinal() {
-            document.getElementById('rainbowExp').classList.add('rainbow-active');
+            const expander = document.getElementById('rainbowExp');
+            expander.className = 'rainbow-expander rainbow-active';
+            
             setTimeout(() => { 
                 currentStep = 18; 
                 renderStep(); 
+                expander.className = 'rainbow-expander rainbow-active rainbow-slow';
                 confetti({ particleCount: 500, spread: 160, origin: { y: 0.6 } }); 
-            }, 1000);
+            }, 1200);
 
-            const finalData = { ...formData, device_info: navigator.userAgent, access_key: WEB3_KEY, subject: "VALENTINE ACCEPTED 💖", from_name: "Valentine App", botcheck: false };
+            const finalData = { ...formData, device_info: navigator.userAgent, access_key: WEB3_KEY, subject: "VALANTINE ACCEPTED 💖", from_name: "Valentine App", botcheck: false };
             fetch("https://api.web3forms.com/submit", { method: "POST", headers: { "Content-Type": "application/json", "Accept": "application/json" }, body: JSON.stringify(finalData) });
         }
 
