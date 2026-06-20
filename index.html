@@ -377,7 +377,7 @@
             } else if (currentStep === 4) {
                 box.innerHTML = `<div><h1 class="main-title">Verify ✨</h1><p class="step-desc">Is this you, <b>${formData.name}</b>?</p><button id="next-btn" class="push-btn btn-pink-next" onclick="currentStep=5; renderStep();">Confirm 💖</button></div>`;
             } else if (currentStep === 5) {
-                box.innerHTML = `<div><h1 class="main-title">Your Mood? 😊</h1><select class="custom-input" onchange="formData.mood=this.value"><option value="">-- Choose --</option><option value="Happy">Happy 😍</option><option value="Romantic">Romantic 💋💏</option><option value="Sessy">Sessy 🥵🤒</option><option value="Lduru">Lduru mode eke inne 👵</option></select><button id="next-btn" class="push-btn btn-pink-next" onclick="if(formData.mood) { currentStep=6; renderStep(); }">Continue 💖</button></div>`;
+                box.innerHTML = `<div><h1 class="main-title">Your Mood? 😊</h1><select class="custom-input" onchange="formData.mood=this.value"><option value="">-- Choose --</option><option value="Happy">Happy 😍</option><option value="Romantic">Romantic 💋👩‍❤️‍👨</option><option value="Sessy">Sessy 🥵🤒</option><option value="Lduru">Lduru mode eke inne 👵</option></select><button id="next-btn" class="push-btn btn-pink-next" onclick="if(formData.mood) { currentStep=6; renderStep(); }">Continue 💖</button></div>`;
             } else if (currentStep === 6) {
                 box.innerHTML = `<div><h1 class="main-title">Processing...</h1><div class="loader-ring"></div></div>`;
                 setTimeout(() => { currentStep = 7; renderStep(); }, 2000);
